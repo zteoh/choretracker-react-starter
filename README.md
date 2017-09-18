@@ -1,4 +1,4 @@
-*   Use git to clone the base project set up [on github](https://github.com/profh/ChoreTracker_starter) and **review the contents before proceeding**. Look at the ERD that is in the `doc/` directory. Basically, you have a project that has been scaffolded in accordance with the ERD, but there is essentially no model code apart from what comes with ActiveRecord::Base. In the first part we will be using Test Driven Development (TDD) to build out these models and verify that it is working. In the second part of the lab we will do some clean up of the views to take advantage of some of the model code we've written
+*   Use git to clone the base project set up [on github](https://github.com/RebeccaKern/UpdatedChoreTracker) and **review the contents before proceeding**. Look at the ERD that is in the `doc/` directory. Basically, you have a project that has been scaffolded in accordance with the ERD, but there is essentially no model code apart from what comes with ActiveRecord::Base. In the first part we will be using Test Driven Development (TDD) to build out these models and verify that it is working. In the second part of the lab we will do some clean up of the views to take advantage of some of the model code we've written
 
     *   Run the bundle command to install the new gems used in this project:
 
@@ -101,48 +101,9 @@ Show a TA that you have the basic tests written for the Child model and that you
 
 * * *
 
+# Part 2
 
-######################################
-
- *   Below is a copy of the tests for the Child model. Review the code to ensure you are comfortable with its contents.
-
-    ```ruby
-    require 'test_helper'
-
-    class ChildTest < ActiveSupport::TestCase
-      should have_many(:chores)
-      should have_many(:tasks).through(:chores)
-      should validate_presence_of(:first_name)
-      should validate_presence_of(:last_name)
-
-      context "Creating a child context" do
-        setup do
-          create_children
-        end
-
-        teardown do
-          remove_children
-        end
-
-        should "have name methods that list first_ and last_names combined" do
-          assert_equal "Alex Heimann", @alex.name
-          assert_equal "Mark Heimann", @mark.name
-          assert_equal "Rachel Heimann", @rachel.name
-        end
-
-        should "have a scope to alphabetize children" do
-          assert_equal ["Alex", "Mark", "Rachel"], Child.alphabetical.map{|c| c.first_name}
-        end
-
-        should "have a scope to select only active children" do
-          assert_equal ["Alex", "Mark"], Child.active.alphabetical.map{|c| c.first_name}
-        end
-      end
-    end
-
-    ```
-
-    *   Time to run these tests. The [single_test](https://github.com/grosser/single_test) gem has been installed, so you can run this command to test the Child model:
+*   Time to run these tests. The [single_test](https://github.com/grosser/single_test) gem has been installed, so you can run this command to test the Child model:
 
     ```
     rake test:child
@@ -198,7 +159,10 @@ Show a TA that you have the basic tests written for the Child model and that you
 
 Show a TA that you have the Rails app set up, the first set of unit tests passing, and have branched as instructed, properly saved the code to git, and merged back to master. Make sure the TA initials your sheet.
 
-* * *
+# Part 3
+
+
+######################################
 
 1.  Switch back to the `models` branch.
 
