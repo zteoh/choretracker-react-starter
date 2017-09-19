@@ -28,7 +28,7 @@
 
     Likewise, include the [turn](https://github.com/turn-project/turn) gem (which will format the unit test output for us) by requiring it in the test helper (see comments on line 7) with `require 'turn/autorun'` and then at the bottom of the file put in the line `Turn.config.format = :outline` to format the output. (See other options for formatting in the gem's documentation.)
 
-3.  Getting back to the code, within the `test/` directory, there is a file called `factories.rb`. In that file, we need to complete the Child factory. Set the first name of the child by default to 'David' and the last name to 'Black' by default. Look at the other factories provided to understand the syntax. For a list of fields on the Child model, look at the `db/schema.rb` file (ignore created_at and update_at fields). **Have a TA verify that the factories are correct before proceeding.**
+3.  Getting back to the code, within the `test/` directory, there is a file called `factories.rb`. In that file, we need to complete the Child factory. Set the first name of the child by default to 'Alex' and the last name to 'Heimann' by default. Look at the other factories provided to understand the syntax. For a list of fields on the Child model, look at the `db/schema.rb` file (ignore created_at and update_at fields). **Have a TA verify that the factories are correct before proceeding.**
 
 4.  Now we are going to practice test driven development by writing out our tests in these first few steps, then later writing our model code to pass these tests. We are ready to create unit tests for the Child model. Open the `child_test.rb` file within the `test/models/` directory. In the first section, we will add some shoulda matchers, beginning with relationship matchers:
 
@@ -211,25 +211,20 @@ Show a TA that you have the Rails app set up, the first set of unit tests passin
     ```rails console```
 
 4.  Require FactoryGirl:
-
     ```ruby
     require 'factory_girl_rails'
     ```
-
 5.  We need to add the context to the development database. To do that, we first must require the context file:
-
     ```ruby
     require './test/contexts'
     ```
 
 6.  Next we need to include this module so we can call on the functions that build and destroy our testing objects. To do that, use the command:
-
     ```ruby
     include Contexts
     ```
 
 7.  Build part of the testing context by running:
-
     ```ruby
     create_children
     create_tasks
@@ -239,20 +234,21 @@ Show a TA that you have the Rails app set up, the first set of unit tests passin
 
 9.  Type `@alex.name` and see that you get 'Alex Heimann'.
 
-10.  Type `k = Child.new` to get an empty child object.
+10.  Type `b = Child.new` to get an empty child object.
 
-11.  Now type `k.first_name = 'Kelly'` and then `k.save!` and see this fails because no last name is specified.
+11.  Now type `b.first_name = 'Becca'` and then `b.save!` and see this fails because no last name is specified.
 
-    Add a last name and see the child object does indeed save.
+Add a last name and see the child object does indeed save.
 
-    Rails console is a great way to test your models informally or to debug issues that are happening on the back end.
+Rails console is a great way to test your models informally or to debug issues that are happening on the back end.
 
 12.  **Note: this is _not_ a substitute for unit testing, but it is a great compliment to testing.**
 
-    There are some great resources online regarding the rails console - below are two articles that you might want to check out later:
+There are some great resources online regarding the rails console - below are two articles that you might want to check out later:
 
     1.  [Secrets of the rails console ninjas](http://slash7.com/articles/2006/12/21/secrets-of-the-rails-console-ninjas)
     2.  [Real console helpers](http://errtheblog.com/posts/41-real-console-helpers)
+    
 13.  Below is the test file for chores. It is the most complex of the three models, so read through the file and once you understand it, run the tests to see the failures and then start writing methods to correct these errors.
 
     ```ruby
