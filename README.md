@@ -317,12 +317,12 @@ There are some great resources online regarding the rails console - below are tw
 
 14.  Now create a new method called `points_earned` that returns the points a child has earned for completed chores. Try this on your own first if you have time. If not or you are stuck, we will give you the method straight-up. (`inject` was covered in RubyMonk, but people still may not get it.) Make sure you understand the code below first before including it and ask a TA if you are unsure. Once you are comfortable with it, re-run the tests and see another one pass.
 
-    ```ruby
-    def points_earned
-      self.chores.done.inject(0){|sum,chore| sum += chore.task.points}
-    end
+```ruby
+def points_earned
+  self.chores.done.inject(0){|sum,chore| sum += chore.task.points}
+end
 
-    ```
+```
 
     **After it passes, merge back to master and get the lab checked-off.**
 
