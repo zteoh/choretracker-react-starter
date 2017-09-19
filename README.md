@@ -246,11 +246,12 @@ Rails console is a great way to test your models informally or to debug issues t
 
 There are some great resources online regarding the rails console - below are two articles that you might want to check out later:
 
-    1.  [Secrets of the rails console ninjas](http://slash7.com/articles/2006/12/21/secrets-of-the-rails-console-ninjas)
-    2.  [Real console helpers](http://errtheblog.com/posts/41-real-console-helpers)
-    
+1.  [Secrets of the rails console ninjas](http://slash7.com/articles/2006/12/21/secrets-of-the-rails-console-ninjas)
+2.  [Real console helpers](http://errtheblog.com/posts/41-real-console-helpers)
+
 13.  Below is the test file for chores. It is the most complex of the three models, so read through the file and once you understand it, run the tests to see the failures and then start writing methods to correct these errors.
 
+* The chore test file:
     ```ruby
     require 'test_helper'
 
