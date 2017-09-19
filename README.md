@@ -1,18 +1,24 @@
-*   Use git to clone the base project set up [on github](https://github.com/profh/ChoreTracker_starter) and **review the contents before proceeding**. Look at the ERD that is in the `doc/` directory. Basically, you have a project that has been scaffolded in accordance with the ERD, but there is essentially no model code apart from what comes with ActiveRecord::Base. In the first part we will be using Test Driven Development (TDD) to build out these models and verify that it is working. In the second part of the lab we will do some clean up of the views to take advantage of some of the model code we've written
+# Part 1
+
+1. Use git to clone the base project set up [on github](https://github.com/RebeccaKern/UpdatedChoreTracker) and **review the contents before proceeding**. Look at the ERD that is in the `doc/` directory. Basically, you have a project that has been scaffolded in accordance with the ERD, but there is essentially no model code apart from what comes with ActiveRecord::Base. In the first part we will be using Test Driven Development (TDD) to build out these models and verify that it is working. In the second part of the lab we will do some clean up of the views to take advantage of some of the model code we've written
 
     *   Run the bundle command to install the new gems used in this project:
 
+        ```ruby
         bundle install
+        ```
 
     *   Install the `validates_timeliness` support files using the rails generator:
 
+        ```ruby
         rails generate validates_timeliness:install
+        ```
 
     Commit these changes to git.
 
     *   Run `git branch` to see that you are on the master branch. Run the `rake db:migrate` command to generate the development database. Then run `rake db:test:prepare` to generate the test database. Once this is done, switch to a different branch called `models`.
 
-    2.  Now we are going to test the Child model by doing some unit tests. Open the `test/test_helper.rb` file and set the use of transactional fixtures to false by commenting out the line `fixtures :all`. At the very top of file, add in the support for [simple_cov](https://github.com/colszowka/simplecov) (a gem which will give us basic test coverage statistics) by adding the following lines:
+2.  Now we are going to test the Child model by writing some unit tests. Open the `test/test_helper.rb` file and set the use of transactional fixtures to false by commenting out the line `fixtures :all`. At the very top of file, add in the support for [simple_cov](https://github.com/colszowka/simplecov) (a gem which will give us basic test coverage statistics) by adding the following lines:
 
     ```ruby
     require 'simplecov'
@@ -20,11 +26,13 @@
 
     ```
 
-    Likewise, include the [turn](https://github.com/turn-project/turn) gem (which will format the unit test output for us) by requiring it in the test helper (see comments on line 8) with `require 'turn/autorun'` and then at the bottom of the file put in the line `Turn.config.format = :outline` to format the output. (See other options for formatting in the gem's documentation.)
+    Likewise, include the [turn](https://github.com/turn-project/turn) gem (which will format the unit test output for us) by requiring it in the test helper (see comments on line 7) with `require 'turn/autorun'` and then at the bottom of the file put in the line `Turn.config.format = :outline` to format the output. (See other options for formatting in the gem's documentation.)
 
-    4.  Getting back to the code, within the `test/` directory, there is a file called `factories.rb`. In that file, we need to complete the Child factory. Set the first name of the child by default to 'David' and the last name to 'Black' by default. Look at the other factories provided to understand the syntax. For a list of fields on the Child model, look at the `db/schema.rb` file (ignore created_at and update_at fields). **Have a TA verify that the factories are correct before proceeding.**
+    If you have forgotten to do so by this point, then make sure you are committing your work to git. Hopefully it is becoming second nature now. It is a great idea to be regularly saving your code to git or some other form of source code control and to take advantage of branching when appropriate. (Your discretion today when to do these things...)
 
-    5.  Now we are going to practice test driven development by writing out our tests in these first few steps, then later writing our model code to pass these tests. We are ready to create unit tests for the Child model. Open the `child_test.rb` file within the `test/models/` directory. In the first section, we will add some shoulda matchers, beginning with relationship matchers:
+3.  Getting back to the code, within the `test/` directory, there is a file called `factories.rb`. In that file, we need to complete the Child factory. Set the first name of the child by default to 'Alex' and the last name to 'Heimann' by default. Look at the other factories provided to understand the syntax. For a list of fields on the Child model, look at the `db/schema.rb` file (ignore created_at and update_at fields). **Have a TA verify that the factories are correct before proceeding.**
+
+4.  Now we are going to practice test driven development by writing out our tests in these first few steps, then later writing our model code to pass these tests. We are ready to create unit tests for the Child model. Open the `child_test.rb` file within the `test/models/` directory. In the first section, we will add some shoulda matchers, beginning with relationship matchers:
 
      ```ruby
 
@@ -34,16 +42,16 @@
 
     Because we have set up the [single_test](https://github.com/grosser/single_test) gem for you, it is possible to just run the child tests with the command `rake test:child`. You can run all three model tests by executing `rake test:units` on the command line, at the moment you will still see failures to be fixed.
 
-  6. Next we add in validation matching:
+5. Next we add in validation matching:
 
-    ```ruby
+      ```ruby
       should validate_presence_of(:first_name)
       should validate_presence_of(:last_name)
       ```
 
     Test these by running `rake test:child` on the command line and watch them fail.
 
-  8.  Before we continue we should set up contexts for more complex unit tests. Essentially a context is where we set up a situation where different aspects of the project can be tested and we know what the correct result should be. For example, we can create a context where there are 3 children in the system, 2 of which are active and since we created this we know what test results should appear. We can then execute tests on model methods within the context and confirm the results are as expected.
+6.  Before we continue we should set up contexts for more complex unit tests. Essentially a context is where we set up a situation where different aspects of the project can be tested and we know what the correct result should be. For example, we can create a context where there are 3 children in the system, 2 of which are active and since we created this we know what test results should appear. We can then execute tests on model methods within the context and confirm the results are as expected.
 
     To save you time and typing, we've provided in the `contexts.rb` file a method called `create_children` which adds a diverse set of objects to the test database and `destroy_children` which wipes them out. If you call these methods in the the setup and teardown method in `ChildTest` we can create a clean testing environment for each test so we know what the tests should return if the methods being tested are working properly. To verify it is working add this code to the bottom of your child_test.rb file:
 
@@ -72,28 +80,25 @@
           assert_equal ["Alex", "Mark"], Child.active.alphabetical.map{|c| c.first_name}
         end
       end
-    end
 
     ```
 
     Review this code so you understand how it works and ask a TA for help if you are unclear about any aspect of it.
 
-    9.  Looking at the first test, we need to test the `alphabetize` scope which essentially alphabetizes the children by name. We know what the result should be for these 3 children and can compare that with what the method returned with the following line:
+7.  Looking at the first test, we need to test the `alphabetize` scope which essentially alphabetizes the children by name. We know what the result should be for these 3 children and can compare that with what the method returned with the following line:
 
     ```ruby
       assert_equal ["Alex", "Mark", "Rachel"], Child.alphabetical.map(&:first_name)
     ```
 
-    10.  Looking at the second test, we need to test the active scope which lists out all of the active children. We know what the result should include the 2 active children, but we don't know in which order they will appear so we call the alphabetical scope once again and make sure that our array includes the names of Alex and Mark in alphabetical order.
+8.  Looking at the second test, we need to test the active scope which lists out all of the active children. We know what the result should include the 2 active children, but we don't know in which order they will appear so we call the alphabetical scope once again and make sure that our array includes the names of Alex and Mark in alphabetical order too.
 
     ```ruby
      assert_equal ["Alex", "Mark"], Child.active.alphabetical.map{|c| c.first_name}
 
     ```
 
-    If you run the unit tests at any point in these first few steps you will see lots of failing test since we don't have any corresponding code in the model.
-
-* * *
+    If you run the unit tests at any point in these first few steps you will see lots of failing test since we don't have any corresponding code in the model. But that's okay, writing thorough tests now will be helpful as we write out our model.
 
 # <span class="mega-icon mega-icon-issue-opened"></span>Stop
 
@@ -101,65 +106,24 @@ Show a TA that you have the basic tests written for the Child model and that you
 
 * * *
 
+# Part 2
 
-######################################
-
- *   Below is a copy of the tests for the Child model. Review the code to ensure you are comfortable with its contents.
-
-    ```ruby
-    require 'test_helper'
-
-    class ChildTest < ActiveSupport::TestCase
-      should have_many(:chores)
-      should have_many(:tasks).through(:chores)
-      should validate_presence_of(:first_name)
-      should validate_presence_of(:last_name)
-
-      context "Creating a child context" do
-        setup do
-          create_children
-        end
-
-        teardown do
-          remove_children
-        end
-
-        should "have name methods that list first_ and last_names combined" do
-          assert_equal "Alex Heimann", @alex.name
-          assert_equal "Mark Heimann", @mark.name
-          assert_equal "Rachel Heimann", @rachel.name
-        end
-
-        should "have a scope to alphabetize children" do
-          assert_equal ["Alex", "Mark", "Rachel"], Child.alphabetical.map{|c| c.first_name}
-        end
-
-        should "have a scope to select only active children" do
-          assert_equal ["Alex", "Mark"], Child.active.alphabetical.map{|c| c.first_name}
-        end
-      end
-    end
-
-    ```
-
-    *   Time to run these tests. The [single_test](https://github.com/grosser/single_test) gem has been installed, so you can run this command to test the Child model:
-
-    ```
+* Time to run these tests. The [single_test](https://github.com/grosser/single_test) gem has been installed, so you can run this command to test the Child model:
+  ```ruby
     rake test:child
+  ```
 
-    ```
+**You should see failures and errors!** Don't panic - we are going to fix them now.
 
-    **You should see failures and errors!** Don't panic - we are going to fix them now.
+* Time to fix these errors:
 
-    *   Time to fix these errors:
+1.  We need relationships to `chores` and `tasks`, so open up the Child model and add the appropriate relationships. Rerun the tests and verify that the test for these relationships pass.
 
-    1.  We need relationships to `chores` and `tasks`, so open up the Child model and add the appropriate relationships. Rerun the tests and verify that the test for these relationships pass.
-
-    2.  Add `validates_presence_of` validators for `first_name` and `last_name` and rerun your tests. You should have two more passing tests.
+2.  Add `validates_presence_of` validators for `first_name` and `last_name` and rerun your tests. You should have two more passing tests.
 
     Commit these changes to your repository.
 
-    *   Create a new method in your `Child` model called `name` that returns "First Last":
+3. Create a new method in your `Child` model called `name` that returns "First Last":
 
     ```ruby
     def name
@@ -170,29 +134,27 @@ Show a TA that you have the basic tests written for the Child model and that you
 
     Run the tests again and see that another test passes.
 
-    *   Add a scope to the `Child` model to alphabetize by last_name, first_name:
+4. Add a scope to the `Child` model to alphabetize by last_name, first_name:
 
     ```ruby
     scope :alphabetical, -> { order(...) }
 
     ```
 
-    Run the tests again and see that another test passes.
+    Run the tests again and see that another test passes. In case you don't believe the test is actually passing, try removing an element from the intended array specified in the child tests file and watch the test fail until you add that item back in.
 
-    *   Add a scope to the `Child` model to only return active children:
+5. Add a scope to the `Child` model to only return active children:
 
     ```ruby
     scope :active, -> { where(...) }
 
     ```
 
-    *   Re-run the tests and you should and they should all pass + 1 error (about missing the Chore model).
+    Re-run the tests and you should and they should all pass + 1 error (about missing the Chore model).
 
     Commit these changes to git.
 
-    *   Now that you have a complete set of passing tests for the Child model, switch back to master and merge the `models` branch into master.
-
-* * *
+6. Now that you have a complete set of passing tests for the Child model, switch back to master and merge the `models` branch into master.
 
 # <span class="mega-icon mega-icon-issue-opened"></span>Stop
 
@@ -200,9 +162,11 @@ Show a TA that you have the Rails app set up, the first set of unit tests passin
 
 * * *
 
+# Part 3
+
 1.  Switch back to the `models` branch.
 
-2.  Below is the testing file to use to test the `Task` model. Following a similar process as above, fix/extend the `Task` model until all these tests pass.
+2.  Below is the testing file to use to test the `Task` model. Following a similar process as above, fix/extend the `Task` model until all these tests pass. Note how we test the input value for the points field - you will need this in the coming phase. Also notice that we need to map the task id to the name so that our scope tests can easily match an array.
 
     ```ruby
     require 'test_helper'
@@ -246,60 +210,65 @@ Show a TA that you have the Rails app set up, the first set of unit tests passin
 
     Fire up the rails console:
 
-    ```
-      rails console
-
-    ```
+    ```rails console```
 
 4.  Require FactoryGirl:
-
     ```ruby
     require 'factory_girl_rails'
-
     ```
-
 5.  We need to add the context to the development database. To do that, we first must require the context file:
-
     ```ruby
     require './test/contexts'
-
     ```
 
 6.  Next we need to include this module so we can call on the functions that build and destroy our testing objects. To do that, use the command:
-
     ```ruby
     include Contexts
-
     ```
 
 7.  Build part of the testing context by running:
-
     ```ruby
     create_children
     create_tasks
-
     ```
 
 8.  Type `Child.active` and see that you get back Alex and Mark records (but not Rachel).
 
 9.  Type `@alex.name` and see that you get 'Alex Heimann'.
 
-10.  Type `k = Child.new` to get an empty child object.
+10.  Type `b = Child.new` to get an empty child object.
 
-11.  Now type `k.first_name = 'Kelly'` and then `k.save!` and see this fails because no last name is specified.
+11.  Now type `b.first_name = 'Becca'` and then `b.save!` and see this fails because no last name is specified.
 
-    Add a last name and see the child object does indeed save.
+Add a last name and see the child object does indeed save.
 
-    Rails console is a great way to test your models informally or to debug issues that are happening on the back end.
+Rails console is a great way to test your models informally or to debug issues that are happening on the back end.
 
 12.  **Note: this is _not_ a substitute for unit testing, but it is a great compliment to testing.**
 
-    There are some great resources online regarding the rails console - below are two articles that you might want to check out later:
+There are some great resources online regarding the rails console - below are two articles that you might want to check out later:
 
-    1.  [Secrets of the rails console ninjas](http://slash7.com/articles/2006/12/21/secrets-of-the-rails-console-ninjas)
-    2.  [Real console helpers](http://errtheblog.com/posts/41-real-console-helpers)
-13.  Below is the test file for chores. It is the most complex of the three models, so read through the file and once you understand it, run the tests to see the failures and then start writing methods to correct these errors.
+* [Secrets of the rails console ninjas](http://slash7.com/articles/2006/12/21/secrets-of-the-rails-console-ninjas)
+* [Real console helpers](http://errtheblog.com/posts/41-real-console-helpers)
 
+In addition, if you would like to create similar tests in your test suite follow the below example:
+
+```ruby
+becca = FactoryGirl.build(:child, first_name: "Becca", last_name: nil)
+deny becca.valid?
+becca = FactoryGirl.build(:child, first_name: "Becca", last_name: "Kern")
+assert becca.valid?
+
+becca.destroy
+```
+
+Do you remember what was said in class about why we had to build these models rather than create them? (Reminder: the build method instantiates an object in memory, but does not save it to the database while the create method instantiates the object and then saves it to the database. If the object is invalid, then the model validations will prohibit it from being saved and break the tests. Whenever we create invalid objects and want to verify they are invalid, we can only use build, not create.)
+
+[Note: remember that we have to destroy the `becca` object after using it, otherwise it could cause problems in later tests.]
+
+13.  Below is the test file for chores. It is the most complex of the three models, so read through the file and once you understand it, run the tests to see the failures and then start writing methods to correct these errors. Note how we are using the timeliness gem to test the input value for the due_on field - you will also need this in the coming phase.
+
+* The chore test file:
     ```ruby
     require 'test_helper'
 
@@ -365,22 +334,26 @@ Show a TA that you have the Rails app set up, the first set of unit tests passin
 
 14.  Now create a new method called `points_earned` that returns the points a child has earned for completed chores. Try this on your own first if you have time. If not or you are stuck, we will give you the method straight-up. (`inject` was covered in RubyMonk, but people still may not get it.) Make sure you understand the code below first before including it and ask a TA if you are unsure. Once you are comfortable with it, re-run the tests and see another one pass.
 
-    ```ruby
-    def points_earned
-      self.chores.done.inject(0){|sum,chore| sum += chore.task.points}
-    end
+```ruby
+def points_earned
+  self.chores.done.inject(0){|sum,chore| sum += chore.task.points}
+end 
+```
 
-    ```
+Run all three model tests by executing `rake test:units` on the command line and make sure everything is passing. 
 
-    **After it passes, merge back to master and get the lab checked-off.**
+15.  Before we go, let's check the testing coverage. To do this, go to the coverage directory of the project, open the file `index.html` in your browser, click on the models tab and view the coverage for your models. Make sure you have 100% coverage for the chores and tasks models. 
 
-* * *
+Then merge back to master and get the lab checked-off. 
 
 # <span class="mega-icon mega-icon-issue-opened"></span>Stop
 
 Show a TA that you have the unit tests for all three models passing, and have properly saved the code to git and merged back to master. Make sure the TA initials your sheet.
 
 * * *
+
+
+# Part 4
 
 **This last section can be skipped for now if you are running out of time in lab, but a good idea to go back to later in prep for phase 3.**
 
@@ -403,8 +376,6 @@ Show a TA that you have the unit tests for all three models passing, and have pr
 
     Do something similar for tasks and verify in the browser that you have menus showing the correct data. After that, add `:order => [:month, :day, :year]` to the due_on field so the order is more natural for the user. Verify that you can add a chore to the system. Looking at the show page, we see we need to correct it by (1) getting rid of the redundant notice at the top, (2) replacing ids with names, (3) make the date more user-friendly as we did in step 10, and replace the completed method with the status method. Do that and reload the page to see the changes.
 
-* * *
-
 # <span class="mega-icon mega-icon-issue-opened"></span>Stop
 
 Show a TA that you have the Rails app set up, it is populated with test data that you got in part from the console exercise and that the views look as they should. Make sure the TA initials your sheet.
@@ -416,3 +387,31 @@ Show a TA that you have the Rails app set up, it is populated with test data tha
 I know you are working on Phase 2 feverishly, but this week also take a little time to go to [RubyMonk's free Ruby Primer](http://rubymonk.com/learning/books/1) and complete the following exercise:
 
 *   Introduction to Lambdas and Blocks
+
+* * *
+## List of Shoulda Matchers
+
+**Shoulda::ActiveRecord::Matchers**
+[items in square brackets are options; almost all matchers have option .with_message('msg')]
+
+*   should belong_to(:model)[.class_name("ModelClassName")][.dependent(:destroy)]
+*   should have_one(:model)[.class_name("ModelClassName")][.dependent(:destroy)]
+*   should have_many(:models)[.class_name("ModelClassName")][.dependent(:destroy)]
+*   should have_many(:models).through(:reference)[.class_name("ModelClassName")][.dependent(:destroy)]
+*   should allow_value("var").for(:field)[.on(:context)]
+*   should_not allow_value("var").for(:field)[.on(:context)]
+*   should allow_mass_assignment_of(:field)[.as(:role)]
+*   should_not allow_mass_assignment_of(:field)[.as(:role)]
+*   should validate_presence_of(:field)
+*   should validate_absence_of(:name)
+*   should validate_numericality_of(:field)[.only_integer][.is_greater_than][.is_less_than]
+*   should validate_uniqueness_of(:field)[.case_insensitive]
+*   should validate_acceptance_of(:field)
+*   should ensure_length_of(:field)[is_at_least(num)][.is_at_most(num)][.is_equal_to(num)]
+*   should ensure_inclusion_of(:field)[.in_range(n..m)][.in_array(ary)]
+*   should ensure_exclusion_of(:field)[.in_range(n..m)][.in_array(ary)]
+*   should have_db_column
+*   should_not have_db_column
+*   should have_db_index
+*   should accept_nested_attributes_for(:model)[.allow_destroy(true/false)][.update_only(true/false)][.limit(num)]
+*   should have_secure_password
