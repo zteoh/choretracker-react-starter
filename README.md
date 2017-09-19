@@ -1,4 +1,6 @@
-*   Use git to clone the base project set up [on github](https://github.com/RebeccaKern/UpdatedChoreTracker) and **review the contents before proceeding**. Look at the ERD that is in the `doc/` directory. Basically, you have a project that has been scaffolded in accordance with the ERD, but there is essentially no model code apart from what comes with ActiveRecord::Base. In the first part we will be using Test Driven Development (TDD) to build out these models and verify that it is working. In the second part of the lab we will do some clean up of the views to take advantage of some of the model code we've written
+# Part 1
+
+1. Use git to clone the base project set up [on github](https://github.com/RebeccaKern/UpdatedChoreTracker) and **review the contents before proceeding**. Look at the ERD that is in the `doc/` directory. Basically, you have a project that has been scaffolded in accordance with the ERD, but there is essentially no model code apart from what comes with ActiveRecord::Base. In the first part we will be using Test Driven Development (TDD) to build out these models and verify that it is working. In the second part of the lab we will do some clean up of the views to take advantage of some of the model code we've written
 
     *   Run the bundle command to install the new gems used in this project:
 
@@ -16,7 +18,7 @@
 
     *   Run `git branch` to see that you are on the master branch. Run the `rake db:migrate` command to generate the development database. Then run `rake db:test:prepare` to generate the test database. Once this is done, switch to a different branch called `models`.
 
-    2.  Now we are going to test the Child model by writing some unit tests. Open the `test/test_helper.rb` file and set the use of transactional fixtures to false by commenting out the line `fixtures :all`. At the very top of file, add in the support for [simple_cov](https://github.com/colszowka/simplecov) (a gem which will give us basic test coverage statistics) by adding the following lines:
+2.  Now we are going to test the Child model by writing some unit tests. Open the `test/test_helper.rb` file and set the use of transactional fixtures to false by commenting out the line `fixtures :all`. At the very top of file, add in the support for [simple_cov](https://github.com/colszowka/simplecov) (a gem which will give us basic test coverage statistics) by adding the following lines:
 
     ```ruby
     require 'simplecov'
@@ -26,9 +28,9 @@
 
     Likewise, include the [turn](https://github.com/turn-project/turn) gem (which will format the unit test output for us) by requiring it in the test helper (see comments on line 8) with `require 'turn/autorun'` and then at the bottom of the file put in the line `Turn.config.format = :outline` to format the output. (See other options for formatting in the gem's documentation.)
 
-    4.  Getting back to the code, within the `test/` directory, there is a file called `factories.rb`. In that file, we need to complete the Child factory. Set the first name of the child by default to 'David' and the last name to 'Black' by default. Look at the other factories provided to understand the syntax. For a list of fields on the Child model, look at the `db/schema.rb` file (ignore created_at and update_at fields). **Have a TA verify that the factories are correct before proceeding.**
+3.  Getting back to the code, within the `test/` directory, there is a file called `factories.rb`. In that file, we need to complete the Child factory. Set the first name of the child by default to 'David' and the last name to 'Black' by default. Look at the other factories provided to understand the syntax. For a list of fields on the Child model, look at the `db/schema.rb` file (ignore created_at and update_at fields). **Have a TA verify that the factories are correct before proceeding.**
 
-    5.  Now we are going to practice test driven development by writing out our tests in these first few steps, then later writing our model code to pass these tests. We are ready to create unit tests for the Child model. Open the `child_test.rb` file within the `test/models/` directory. In the first section, we will add some shoulda matchers, beginning with relationship matchers:
+4.  Now we are going to practice test driven development by writing out our tests in these first few steps, then later writing our model code to pass these tests. We are ready to create unit tests for the Child model. Open the `child_test.rb` file within the `test/models/` directory. In the first section, we will add some shoulda matchers, beginning with relationship matchers:
 
      ```ruby
 
@@ -38,16 +40,16 @@
 
     Because we have set up the [single_test](https://github.com/grosser/single_test) gem for you, it is possible to just run the child tests with the command `rake test:child`. You can run all three model tests by executing `rake test:units` on the command line, at the moment you will still see failures to be fixed.
 
-  6. Next we add in validation matching:
+5. Next we add in validation matching:
 
-    ```ruby
+      ```ruby
       should validate_presence_of(:first_name)
       should validate_presence_of(:last_name)
       ```
 
     Test these by running `rake test:child` on the command line and watch them fail.
 
-  8.  Before we continue we should set up contexts for more complex unit tests. Essentially a context is where we set up a situation where different aspects of the project can be tested and we know what the correct result should be. For example, we can create a context where there are 3 children in the system, 2 of which are active and since we created this we know what test results should appear. We can then execute tests on model methods within the context and confirm the results are as expected.
+6.  Before we continue we should set up contexts for more complex unit tests. Essentially a context is where we set up a situation where different aspects of the project can be tested and we know what the correct result should be. For example, we can create a context where there are 3 children in the system, 2 of which are active and since we created this we know what test results should appear. We can then execute tests on model methods within the context and confirm the results are as expected.
 
     To save you time and typing, we've provided in the `contexts.rb` file a method called `create_children` which adds a diverse set of objects to the test database and `destroy_children` which wipes them out. If you call these methods in the the setup and teardown method in `ChildTest` we can create a clean testing environment for each test so we know what the tests should return if the methods being tested are working properly. To verify it is working add this code to the bottom of your child_test.rb file:
 
@@ -82,13 +84,13 @@
 
     Review this code so you understand how it works and ask a TA for help if you are unclear about any aspect of it.
 
-    9.  Looking at the first test, we need to test the `alphabetize` scope which essentially alphabetizes the children by name. We know what the result should be for these 3 children and can compare that with what the method returned with the following line:
+7.  Looking at the first test, we need to test the `alphabetize` scope which essentially alphabetizes the children by name. We know what the result should be for these 3 children and can compare that with what the method returned with the following line:
 
     ```ruby
       assert_equal ["Alex", "Mark", "Rachel"], Child.alphabetical.map(&:first_name)
     ```
 
-    10.  Looking at the second test, we need to test the active scope which lists out all of the active children. We know what the result should include the 2 active children, but we don't know in which order they will appear so we call the alphabetical scope once again and make sure that our array includes the names of Alex and Mark in alphabetical order.
+8.  Looking at the second test, we need to test the active scope which lists out all of the active children. We know what the result should include the 2 active children, but we don't know in which order they will appear so we call the alphabetical scope once again and make sure that our array includes the names of Alex and Mark in alphabetical order.
 
     ```ruby
      assert_equal ["Alex", "Mark"], Child.active.alphabetical.map{|c| c.first_name}
@@ -96,8 +98,6 @@
     ```
 
     If you run the unit tests at any point in these first few steps you will see lots of failing test since we don't have any corresponding code in the model.
-
-* * *
 
 # <span class="mega-icon mega-icon-issue-opened"></span>Stop
 
@@ -107,16 +107,17 @@ Show a TA that you have the basic tests written for the Child model and that you
 
 # Part 2
 
-*   Time to run these tests. The [single_test](https://github.com/grosser/single_test) gem has been installed, so you can run this command to test the Child model:
+Time to run these tests. The [single_test](https://github.com/grosser/single_test) gem has been installed, so you can run this command to test the Child model:
 
-    ```
-    rake test:child
 
-    ```
+        ```ruby
+        bundle install
+        ```
 
-    **You should see failures and errors!** Don't panic - we are going to fix them now.
 
-    *   Time to fix these errors:
+**You should see failures and errors!** Don't panic - we are going to fix them now.
+
+Time to fix these errors:
 
     1.  We need relationships to `chores` and `tasks`, so open up the Child model and add the appropriate relationships. Rerun the tests and verify that the test for these relationships pass.
 
