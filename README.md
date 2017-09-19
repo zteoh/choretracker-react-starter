@@ -154,11 +154,11 @@ Show a TA that you have the basic tests written for the Child model and that you
 
 6. Now that you have a complete set of passing tests for the Child model, switch back to master and merge the `models` branch into master.
 
-* * *
-
 # <span class="mega-icon mega-icon-issue-opened"></span>Stop
 
 Show a TA that you have the Rails app set up, the first set of unit tests passing, and have branched as instructed, properly saved the code to git, and merged back to master. Make sure the TA initials your sheet.
+
+* * *
 
 # Part 3
 
