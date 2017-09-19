@@ -166,7 +166,7 @@ Show a TA that you have the Rails app set up, the first set of unit tests passin
 
 1.  Switch back to the `models` branch.
 
-2.  Below is the testing file to use to test the `Task` model. Following a similar process as above, fix/extend the `Task` model until all these tests pass.
+2.  Below is the testing file to use to test the `Task` model. Following a similar process as above, fix/extend the `Task` model until all these tests pass. Note how we test the input value for the points field - you will need this in the coming phase. Also notice that we need to map the task id to the name so that our scope tests can easily match an array.
 
     ```ruby
     require 'test_helper'
@@ -251,7 +251,7 @@ There are some great resources online regarding the rails console - below are tw
 * [Secrets of the rails console ninjas](http://slash7.com/articles/2006/12/21/secrets-of-the-rails-console-ninjas)
 * [Real console helpers](http://errtheblog.com/posts/41-real-console-helpers)
 
-13.  Below is the test file for chores. It is the most complex of the three models, so read through the file and once you understand it, run the tests to see the failures and then start writing methods to correct these errors.
+13.  Below is the test file for chores. It is the most complex of the three models, so read through the file and once you understand it, run the tests to see the failures and then start writing methods to correct these errors. Note how we are using the timeliness gem to test the input value for the due_on field - you will also need this in the coming phase.
 
 * The chore test file:
     ```ruby
