@@ -320,13 +320,10 @@ There are some great resources online regarding the rails console - below are tw
 ```ruby
 def points_earned
   self.chores.done.inject(0){|sum,chore| sum += chore.task.points}
-end
-
+end 
 ```
 
-    **After it passes, merge back to master and get the lab checked-off.**
-
-* * *
+After it passes, merge back to master and get the lab checked-off.
 
 # <span class="mega-icon mega-icon-issue-opened"></span>Stop
 
@@ -335,6 +332,8 @@ Show a TA that you have the unit tests for all three models passing, and have pr
 * * *
 
 **This last section can be skipped for now if you are running out of time in lab, but a good idea to go back to later in prep for phase 3.**
+
+#Part 4 (Optional)
 
 1.  Now that we have a working Chore model, go to rails console and run the `create_chores` method to populate the system with some chores. [**Note**: If you didn't have rails console running on a separate tab and are restarting it, you will need to (a) run `Child.destroy_all` and `Task.destroy_all` to clear the old records, then (b) require `factory_girl_rails` and the context again (see above), and then (c) run all three create_ methods (children, tasks, chores) to populate the database.]
 
