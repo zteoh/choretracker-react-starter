@@ -2,17 +2,21 @@
 
     *   Run the bundle command to install the new gems used in this project:
 
+        ```ruby
         bundle install
+        ```
 
     *   Install the `validates_timeliness` support files using the rails generator:
 
+        ```ruby
         rails generate validates_timeliness:install
+        ```
 
     Commit these changes to git.
 
     *   Run `git branch` to see that you are on the master branch. Run the `rake db:migrate` command to generate the development database. Then run `rake db:test:prepare` to generate the test database. Once this is done, switch to a different branch called `models`.
 
-    2.  Now we are going to test the Child model by doing some unit tests. Open the `test/test_helper.rb` file and set the use of transactional fixtures to false by commenting out the line `fixtures :all`. At the very top of file, add in the support for [simple_cov](https://github.com/colszowka/simplecov) (a gem which will give us basic test coverage statistics) by adding the following lines:
+    2.  Now we are going to test the Child model by writing some unit tests. Open the `test/test_helper.rb` file and set the use of transactional fixtures to false by commenting out the line `fixtures :all`. At the very top of file, add in the support for [simple_cov](https://github.com/colszowka/simplecov) (a gem which will give us basic test coverage statistics) by adding the following lines:
 
     ```ruby
     require 'simplecov'
