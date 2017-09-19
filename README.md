@@ -28,6 +28,8 @@
 
     Likewise, include the [turn](https://github.com/turn-project/turn) gem (which will format the unit test output for us) by requiring it in the test helper (see comments on line 7) with `require 'turn/autorun'` and then at the bottom of the file put in the line `Turn.config.format = :outline` to format the output. (See other options for formatting in the gem's documentation.)
 
+    If you have forgotten to do so by this point, then make sure you are committing your work to git. Hopefully it is becoming second nature now. It is a great idea to be regularly saving your code to git or some other form of source code control and to take advantage of branching when appropriate. (Your discretion today when to do these things...)
+
 3.  Getting back to the code, within the `test/` directory, there is a file called `factories.rb`. In that file, we need to complete the Child factory. Set the first name of the child by default to 'Alex' and the last name to 'Heimann' by default. Look at the other factories provided to understand the syntax. For a list of fields on the Child model, look at the `db/schema.rb` file (ignore created_at and update_at fields). **Have a TA verify that the factories are correct before proceeding.**
 
 4.  Now we are going to practice test driven development by writing out our tests in these first few steps, then later writing our model code to pass these tests. We are ready to create unit tests for the Child model. Open the `child_test.rb` file within the `test/models/` directory. In the first section, we will add some shoulda matchers, beginning with relationship matchers:
@@ -323,7 +325,7 @@ def points_earned
 end 
 ```
 
-After it passes, merge back to master and get the lab checked-off.
+Run all three model tests by executing `rake test:units` on the command line and make sure everything is passing. Then merge back to master and get the lab checked-off. 
 
 # <span class="mega-icon mega-icon-issue-opened"></span>Stop
 
