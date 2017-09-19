@@ -325,7 +325,11 @@ def points_earned
 end 
 ```
 
-Run all three model tests by executing `rake test:units` on the command line and make sure everything is passing. Then merge back to master and get the lab checked-off. 
+Run all three model tests by executing `rake test:units` on the command line and make sure everything is passing. 
+
+15.  Before we go, let's check the testing coverage. To do this, go to the coverage directory of the project, open the file `index.html` in your browser, click on the models tab and view the coverage for your models. Make sure you have 100% coverage for the chores and tasks models. 
+
+Then merge back to master and get the lab checked-off. 
 
 # <span class="mega-icon mega-icon-issue-opened"></span>Stop
 
@@ -368,3 +372,31 @@ Show a TA that you have the Rails app set up, it is populated with test data tha
 I know you are working on Phase 2 feverishly, but this week also take a little time to go to [RubyMonk's free Ruby Primer](http://rubymonk.com/learning/books/1) and complete the following exercise:
 
 *   Introduction to Lambdas and Blocks
+
+* * *
+## List of Shoulda Matchers
+
+**Shoulda::ActiveRecord::Matchers**
+[items in square brackets are options; almost all matchers have option .with_message('msg')]
+
+*   should belong_to(:model)[.class_name("ModelClassName")][.dependent(:destroy)]
+*   should have_one(:model)[.class_name("ModelClassName")][.dependent(:destroy)]
+*   should have_many(:models)[.class_name("ModelClassName")][.dependent(:destroy)]
+*   should have_many(:models).through(:reference)[.class_name("ModelClassName")][.dependent(:destroy)]
+*   should allow_value("var").for(:field)[.on(:context)]
+*   should_not allow_value("var").for(:field)[.on(:context)]
+*   should allow_mass_assignment_of(:field)[.as(:role)]
+*   should_not allow_mass_assignment_of(:field)[.as(:role)]
+*   should validate_presence_of(:field)
+*   should validate_absence_of(:name)
+*   should validate_numericality_of(:field)[.only_integer][.is_greater_than][.is_less_than]
+*   should validate_uniqueness_of(:field)[.case_insensitive]
+*   should validate_acceptance_of(:field)
+*   should ensure_length_of(:field)[is_at_least(num)][.is_at_most(num)][.is_equal_to(num)]
+*   should ensure_inclusion_of(:field)[.in_range(n..m)][.in_array(ary)]
+*   should ensure_exclusion_of(:field)[.in_range(n..m)][.in_array(ary)]
+*   should have_db_column
+*   should_not have_db_column
+*   should have_db_index
+*   should accept_nested_attributes_for(:model)[.allow_destroy(true/false)][.update_only(true/false)][.limit(num)]
+*   should have_secure_password
