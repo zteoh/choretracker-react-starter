@@ -355,8 +355,6 @@ Show a TA that you have the unit tests for all three models passing, and have pr
 
     Do something similar for tasks and verify in the browser that you have menus showing the correct data. After that, add `:order => [:month, :day, :year]` to the due_on field so the order is more natural for the user. Verify that you can add a chore to the system. Looking at the show page, we see we need to correct it by (1) getting rid of the redundant notice at the top, (2) replacing ids with names, (3) make the date more user-friendly as we did in step 10, and replace the completed method with the status method. Do that and reload the page to see the changes.
 
-* * *
-
 # <span class="mega-icon mega-icon-issue-opened"></span>Stop
 
 Show a TA that you have the Rails app set up, it is populated with test data that you got in part from the console exercise and that the views look as they should. Make sure the TA initials your sheet.
