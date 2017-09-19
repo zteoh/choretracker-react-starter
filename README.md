@@ -107,12 +107,10 @@ Show a TA that you have the basic tests written for the Child model and that you
 
 # Part 2
 
-Time to run these tests. The [single_test](https://github.com/grosser/single_test) gem has been installed, so you can run this command to test the Child model:
-
-
-        ```ruby
-        bundle install
-        ```
+* Time to run these tests. The [single_test](https://github.com/grosser/single_test) gem has been installed, so you can run this command to test the Child model:
+  ```ruby
+    rake test:child
+  ```
 
 
 **You should see failures and errors!** Don't panic - we are going to fix them now.
