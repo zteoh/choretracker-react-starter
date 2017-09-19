@@ -26,7 +26,7 @@
 
     ```
 
-    Likewise, include the [turn](https://github.com/turn-project/turn) gem (which will format the unit test output for us) by requiring it in the test helper (see comments on line 8) with `require 'turn/autorun'` and then at the bottom of the file put in the line `Turn.config.format = :outline` to format the output. (See other options for formatting in the gem's documentation.)
+    Likewise, include the [turn](https://github.com/turn-project/turn) gem (which will format the unit test output for us) by requiring it in the test helper (see comments on line 7) with `require 'turn/autorun'` and then at the bottom of the file put in the line `Turn.config.format = :outline` to format the output. (See other options for formatting in the gem's documentation.)
 
 3.  Getting back to the code, within the `test/` directory, there is a file called `factories.rb`. In that file, we need to complete the Child factory. Set the first name of the child by default to 'David' and the last name to 'Black' by default. Look at the other factories provided to understand the syntax. For a list of fields on the Child model, look at the `db/schema.rb` file (ignore created_at and update_at fields). **Have a TA verify that the factories are correct before proceeding.**
 
@@ -78,7 +78,6 @@
           assert_equal ["Alex", "Mark"], Child.active.alphabetical.map{|c| c.first_name}
         end
       end
-    end
 
     ```
 
@@ -90,14 +89,14 @@
       assert_equal ["Alex", "Mark", "Rachel"], Child.alphabetical.map(&:first_name)
     ```
 
-8.  Looking at the second test, we need to test the active scope which lists out all of the active children. We know what the result should include the 2 active children, but we don't know in which order they will appear so we call the alphabetical scope once again and make sure that our array includes the names of Alex and Mark in alphabetical order.
+8.  Looking at the second test, we need to test the active scope which lists out all of the active children. We know what the result should include the 2 active children, but we don't know in which order they will appear so we call the alphabetical scope once again and make sure that our array includes the names of Alex and Mark in alphabetical order too.
 
     ```ruby
      assert_equal ["Alex", "Mark"], Child.active.alphabetical.map{|c| c.first_name}
 
     ```
 
-    If you run the unit tests at any point in these first few steps you will see lots of failing test since we don't have any corresponding code in the model.
+    If you run the unit tests at any point in these first few steps you will see lots of failing test since we don't have any corresponding code in the model. But that's okay, writing thorough tests now will be helpful as we write out our model.
 
 # <span class="mega-icon mega-icon-issue-opened"></span>Stop
 
@@ -162,9 +161,6 @@ Show a TA that you have the basic tests written for the Child model and that you
 Show a TA that you have the Rails app set up, the first set of unit tests passing, and have branched as instructed, properly saved the code to git, and merged back to master. Make sure the TA initials your sheet.
 
 # Part 3
-
-
-######################################
 
 1.  Switch back to the `models` branch.
 
