@@ -328,7 +328,7 @@ end
 
 Run all three model tests by executing `rake test:units` on the command line and make sure everything is passing. 
 
-15.  Before we go, let's check the testing coverage. To do this, go to the coverage directory of the project, open the file `index.html` in your browser, click on the models tab and view the coverage for your models. Make sure you have 100% coverage for the chores and tasks models. 
+15.  Before we go, let's check the testing coverage. To do this, go to the coverage directory of the project, open the file `index.html` in your browser, click on the models tab and view the coverage for your models. Make sure you have 100% coverage for the chores and tasks models. Be able to explain to a TA why you don't have 100% coverage on the child model.
 
 Then merge back to master and get the lab checked-off. 
 
