@@ -314,7 +314,7 @@ There are some great resources online regarding the rails console - below are tw
     end
 
     ```
-    Hint: the scope :by_task is different than other scopes you've seen and that you will need to use a join. If you're stuck on this, ask a TA for help.
+    Hint: The scope :by_task is different than other scopes you've seen and you will need to use a join. If you're stuck on this, ask a TA for help.
 
     **Once these tests all pass, merge the code back into the `master` branch.**
 
