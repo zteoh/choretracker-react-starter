@@ -141,7 +141,7 @@ Show a TA that you have the basic tests written for the Child model and that you
 
     ```
 
-    Run the tests again and see that another test passes.
+    Run the tests again and see that another test passes. In case you don't believe the test is actually passing, try removing an element from the intended array specified in the child tests file and watch the test fail until you add that item back in.
 
 5. Add a scope to the `Child` model to only return active children:
 
