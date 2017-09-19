@@ -251,21 +251,6 @@ There are some great resources online regarding the rails console - below are tw
 * [Secrets of the rails console ninjas](http://slash7.com/articles/2006/12/21/secrets-of-the-rails-console-ninjas)
 * [Real console helpers](http://errtheblog.com/posts/41-real-console-helpers)
 
-In addition, if you would like to create similar tests in your test suite follow the below example:
-
-```ruby
-becca = FactoryGirl.build(:child, first_name: "Becca", last_name: nil)
-deny becca.valid?
-becca = FactoryGirl.build(:child, first_name: "Becca", last_name: "Kern")
-assert becca.valid?
-
-becca.destroy
-```
-
-Do you remember what was said in class about why we had to build these models rather than create them? (Reminder: the build method instantiates an object in memory, but does not save it to the database while the create method instantiates the object and then saves it to the database. If the object is invalid, then the model validations will prohibit it from being saved and break the tests. Whenever we create invalid objects and want to verify they are invalid, we can only use build, not create.)
-
-[Note: remember that we have to destroy the `becca` object after using it, otherwise it could cause problems in later tests.]
-
 13.  Below is the test file for chores. It is the most complex of the three models, so read through the file and once you understand it, run the tests to see the failures and then start writing methods to correct these errors. Note how we are using the timeliness gem to test the input value for the due_on field - you will also need this in the coming phase.
 
 * The chore test file:
@@ -329,6 +314,7 @@ Do you remember what was said in class about why we had to build these models ra
     end
 
     ```
+    Hint: the scope :by_task is different than other scopes you've seen and that you will need to use a join. If you're stuck on this, ask a TA for help.
 
     **Once these tests all pass, merge the code back into the `master` branch.**
 
