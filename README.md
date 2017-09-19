@@ -212,17 +212,20 @@ Show a TA that you have the Rails app set up, the first set of unit tests passin
 
 4.  Require FactoryGirl:
 
-    ```require 'factory_girl_rails'```
+    ```ruby
+    require 'factory_girl_rails'
+    ```
 
 5.  We need to add the context to the development database. To do that, we first must require the context file:
 
-    ```require './test/contexts'```
+    ```ruby
+    require './test/contexts'
+    ```
 
 6.  Next we need to include this module so we can call on the functions that build and destroy our testing objects. To do that, use the command:
 
     ```ruby
     include Contexts
-
     ```
 
 7.  Build part of the testing context by running:
@@ -230,7 +233,6 @@ Show a TA that you have the Rails app set up, the first set of unit tests passin
     ```ruby
     create_children
     create_tasks
-
     ```
 
 8.  Type `Child.active` and see that you get back Alex and Mark records (but not Rachel).
