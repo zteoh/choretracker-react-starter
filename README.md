@@ -112,18 +112,17 @@ Show a TA that you have the basic tests written for the Child model and that you
     rake test:child
   ```
 
-
 **You should see failures and errors!** Don't panic - we are going to fix them now.
 
-Time to fix these errors:
+* Time to fix these errors:
 
-    1.  We need relationships to `chores` and `tasks`, so open up the Child model and add the appropriate relationships. Rerun the tests and verify that the test for these relationships pass.
+1.  We need relationships to `chores` and `tasks`, so open up the Child model and add the appropriate relationships. Rerun the tests and verify that the test for these relationships pass.
 
-    2.  Add `validates_presence_of` validators for `first_name` and `last_name` and rerun your tests. You should have two more passing tests.
+2.  Add `validates_presence_of` validators for `first_name` and `last_name` and rerun your tests. You should have two more passing tests.
 
     Commit these changes to your repository.
 
-    *   Create a new method in your `Child` model called `name` that returns "First Last":
+3. Create a new method in your `Child` model called `name` that returns "First Last":
 
     ```ruby
     def name
@@ -134,7 +133,7 @@ Time to fix these errors:
 
     Run the tests again and see that another test passes.
 
-    *   Add a scope to the `Child` model to alphabetize by last_name, first_name:
+4. Add a scope to the `Child` model to alphabetize by last_name, first_name:
 
     ```ruby
     scope :alphabetical, -> { order(...) }
@@ -143,18 +142,18 @@ Time to fix these errors:
 
     Run the tests again and see that another test passes.
 
-    *   Add a scope to the `Child` model to only return active children:
+5. Add a scope to the `Child` model to only return active children:
 
     ```ruby
     scope :active, -> { where(...) }
 
     ```
 
-    *   Re-run the tests and you should and they should all pass + 1 error (about missing the Chore model).
+    Re-run the tests and you should and they should all pass + 1 error (about missing the Chore model).
 
     Commit these changes to git.
 
-    *   Now that you have a complete set of passing tests for the Child model, switch back to master and merge the `models` branch into master.
+6. Now that you have a complete set of passing tests for the Child model, switch back to master and merge the `models` branch into master.
 
 * * *
 
