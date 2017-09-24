@@ -26,9 +26,18 @@
 
     ```
 
-    Likewise, include the [turn](https://github.com/turn-project/turn) gem (which will format the unit test output for us) by requiring it in the test helper (see comments on line 7) with `require 'turn/autorun'` and then at the bottom of the file put in the line `Turn.config.format = :outline` to format the output. (See other options for formatting in the gem's documentation.)
+    Likewise, include the [turn](https://github.com/turn-project/turn) gem (which will format the unit test output for us) by requiring it in the test helper (see comments on line 7) with: 
+    ```ruby
+    require 'turn/autorun'
+    ```
+    and then at the bottom of the file put in the line: 
+    ```ruby
+    Turn.config.format = :outline
+    ```
 
-    If you have forgotten to do so by this point, then make sure you are committing your work to git. Hopefully it is becoming second nature now. It is a great idea to be regularly saving your code to git or some other form of source code control and to take advantage of branching when appropriate. (Your discretion today when to do these things...)
+    to format the output. (See other options for formatting in the gem's documentation.)
+
+    If you have forgotten to do so by this point, then **make sure you are committing your work to git**. Hopefully it is becoming second nature now. It is a great idea to be regularly saving your code to git or some other form of source code control and to take advantage of branching when appropriate. (Your discretion today when to do these things...)
 
 3.  Getting back to the code, within the `test/` directory, there is a file called `factories.rb`. In that file, we need to complete the Child factory. Set the first name of the child by default to 'Alex' and the last name to 'Heimann' by default. Look at the other factories provided to understand the syntax. For a list of fields on the Child model, look at the `db/schema.rb` file (ignore created_at and update_at fields). **Have a TA verify that the factories are correct before proceeding.**
 
@@ -51,9 +60,9 @@
 
     Test these by running `rake test:child` on the command line and watch them fail.
 
-6.  Before we continue we should set up contexts for more complex unit tests. Essentially a context is where we set up a situation where different aspects of the project can be tested and we know what the correct result should be. For example, we can create a context where there are 3 children in the system, 2 of which are active and since we created this we know what test results should appear. We can then execute tests on model methods within the context and confirm the results are as expected.
+6.  Before we continue we should set up contexts for more complex unit tests. Essentially a context is a controlled environment where the same databse setup is replicated before each test within the context to test the same data on various scenarios. For example, we can create a context where there are 3 children in the system, 2 of which are active. We then can use knowledge about these children within the context to set up testing scenarios.
 
-    To save you time and typing, we've provided in the `contexts.rb` file a method called `create_children` which adds a diverse set of objects to the test database and `destroy_children` which wipes them out. If you call these methods in the the setup and teardown method in `ChildTest` we can create a clean testing environment for each test so we know what the tests should return if the methods being tested are working properly. To verify it is working add this code to the bottom of your child_test.rb file:
+    To save you time and typing, we've provided in the `contexts.rb` file a method called `create_children` which adds a diverse set of objects to the test database and `destroy_children` which wipes them out. If you call these methods in the the setup and teardown method in `ChildTest` we can create a clean testing environment for each test so we know what the tests should return if the methods being tested are working properly. To verify it is working add this code to the bottom of your `child_test.rb` file:
 
      ```ruby
 
@@ -63,7 +72,7 @@
         end
 
         teardown do
-          remove_children
+          destroy_children
         end
 
         should "have name methods that list first_ and last_names combined" do
@@ -85,20 +94,20 @@
 
     Review this code so you understand how it works and ask a TA for help if you are unclear about any aspect of it.
 
-7.  Looking at the first test, we need to test the `alphabetize` scope which essentially alphabetizes the children by name. We know what the result should be for these 3 children and can compare that with what the method returned with the following line:
+7.  Looking at the first test, we need to test the `alphabetize` scope which essentially alphabetizes the children by name. We know what the result should be for these 3 children and can compare that with what the method returned. Observe this testing scenario in the following line copied from above:
 
     ```ruby
       assert_equal ["Alex", "Mark", "Rachel"], Child.alphabetical.map(&:first_name)
     ```
 
-8.  Looking at the second test, we need to test the active scope which lists out all of the active children. We know what the result should include the 2 active children, but we don't know in which order they will appear so we call the alphabetical scope once again and make sure that our array includes the names of Alex and Mark in alphabetical order too.
+8.  Looking at the second test, we need to test the `active` scope which lists out all of the active children. We know what the result should include the 2 active children, but we don't know in which order they will appear so we call the alphabetical scope once again and make sure that our array includes the names of Alex and Mark in alphabetical order too. Again, observe the following line copied from above:
 
     ```ruby
      assert_equal ["Alex", "Mark"], Child.active.alphabetical.map{|c| c.first_name}
 
     ```
 
-    If you run the unit tests at any point in these first few steps you will see lots of failing test since we don't have any corresponding code in the model. But that's okay, writing thorough tests now will be helpful as we write out our model.
+    If you run the unit tests at any point in these first few steps you will see lots of failing tests since we don't have any corresponding code in the model. But that's okay, writing thorough tests now will be helpful as we write out our model.
 
 # <span class="mega-icon mega-icon-issue-opened"></span>Stop
 
@@ -121,7 +130,7 @@ Show a TA that you have the basic tests written for the Child model and that you
 
 2.  Add `validates_presence_of` validators for `first_name` and `last_name` and rerun your tests. You should have two more passing tests.
 
-    Commit these changes to your repository.
+    **Commit these changes to your repository**.
 
 3. Create a new method in your `Child` model called `name` that returns "First Last":
 
@@ -166,7 +175,7 @@ Show a TA that you have the Rails app set up, the first set of unit tests passin
 
 1.  Switch back to the `models` branch.
 
-2.  Below is the testing file to use to test the `Task` model. Following a similar process as above, fix/extend the `Task` model until all these tests pass. Note how we test the input value for the points field - you will need this in the coming phase. Also notice that we need to map the task id to the name so that our scope tests can easily match an array.
+2.  Below is the entire testing file you need to copy into `task_test.rb` to use to test the `Task` model. Following a similar process as above, fix/extend the `Task` model until all these tests pass. Note how we test the input value for the points field - you will need this in the coming phase. Also notice that we need to map the task id to the name so that our scope tests can easily match an array.
 
     ```ruby
     require 'test_helper'
@@ -208,7 +217,7 @@ Show a TA that you have the Rails app set up, the first set of unit tests passin
 
 3.  Switch back to the `models` branch. This time before doing any testing of `Chore` we are going use the Rails Console for testing.
 
-    Fire up the rails console:
+    Fire up the rails console from the terminal:
 
     ```rails console```
 
@@ -244,14 +253,14 @@ Add a last name and see the child object does indeed save.
 
 Rails console is a great way to test your models informally or to debug issues that are happening on the back end.
 
-12.  **Note: this is _not_ a substitute for unit testing, but it is a great compliment to testing.**
+**Note: this is _not_ a substitute for unit testing, but it is a great compliment to testing.**
 
-There are some great resources online regarding the rails console - below are two articles that you might want to check out later:
+12. There are some great resources online regarding the rails console - below are two articles that you might want to check out later:
 
 * [Secrets of the rails console ninjas](http://slash7.com/articles/2006/12/21/secrets-of-the-rails-console-ninjas)
 * [Real console helpers](http://errtheblog.com/posts/41-real-console-helpers)
 
-13.  Below is the test file for chores. It is the most complex of the three models, so read through the file and once you understand it, run the tests to see the failures and then start writing methods to correct these errors. Note how we are using the timeliness gem to test the input value for the due_on field - you will also need this in the coming phase.
+13.  Below is the entire testing file you need to copy into `chore_test.rb`. It is the most complex of the three models, so read through the file and once you understand it, run the tests to see the failures and then start writing methods to correct these errors. Note how we are using the timeliness gem to test the input value for the due_on field - you will also need this in the coming phase.
 
 * The chore test file:
     ```ruby
@@ -318,7 +327,22 @@ There are some great resources online regarding the rails console - below are tw
 
     **Once these tests all pass, merge the code back into the `master` branch.**
 
-14.  Now create a new method called `points_earned` that returns the points a child has earned for completed chores. Try this on your own first if you have time. If not or you are stuck, we will give you the method straight-up. (`inject` was covered in RubyMonk, but people still may not get it.) Make sure you understand the code below first before including it and ask a TA if you are unsure. Once you are comfortable with it, re-run the tests and see another one pass.
+
+14. Now that the Chore model is complete, we can add in some tests to our `child_test.rb` within the context to test for how many points a Child has done by completing tasks. Add the following line to your context in `child_text.rb`:
+
+  ```ruby
+  should "have a method to find the points a child has earned" do
+    create_tasks
+    create_chores
+    assert_equal 4, @alex.points_earned
+    assert_equal 1, @mark.points_earned
+    assert_equal 0, @rachel.points_earned
+    destroy_tasks
+    destroy_chores
+  end
+  ```
+
+15.  Now go back to the Child model and create a new method called `points_earned` that returns the points a child has earned for completed chores. Try this on your own first if you have time. If not or you are stuck, we will give you the method straight-up. (`inject` was covered in RubyMonk, but people still may not get it.) Make sure you understand the code below first before including it and ask a TA if you are unsure. Once you are comfortable with it, re-run the tests and see another one pass.
 
 ```ruby
 def points_earned
@@ -328,7 +352,7 @@ end
 
 Run all three model tests by executing `rake test:units` on the command line and make sure everything is passing. 
 
-15.  Before we go, let's check the testing coverage. To do this, go to the coverage directory of the project, open the file `index.html` in your browser, click on the models tab and view the coverage for your models. Make sure you have 100% coverage for the chores and tasks models. Be able to explain to a TA why you don't have 100% coverage on the child model.
+16.  Before we go, let's check the testing coverage. To do this, go to the coverage directory of the project, open the file `index.html` in your browser, click on the models tab and view the coverage for your models. Make sure you have 100% coverage for the chores and tasks models. Be able to explain to a TA why you don't have 100% coverage on the child model.
 
 Then merge back to master and get the lab checked-off. 
 
