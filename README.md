@@ -328,21 +328,7 @@ Rails console is a great way to test your models informally or to debug issues t
     **Once these tests all pass, merge the code back into the `master` branch.**
 
 
-14. Now that the Chore model is complete, we can add in some tests to our `child_test.rb` within the context to test for how many points a Child has done by completing tasks. Add the following line to your context in `child_text.rb`:
-
-  ```ruby
-  should "have a method to find the points a child has earned" do
-    create_tasks
-    create_chores
-    assert_equal 4, @alex.points_earned
-    assert_equal 1, @mark.points_earned
-    assert_equal 0, @rachel.points_earned
-    destroy_tasks
-    destroy_chores
-  end
-  ```
-
-15.  Now go back to the Child model and create a new method called `points_earned` that returns the points a child has earned for completed chores. Try this on your own first if you have time. If not or you are stuck, we will give you the method straight-up. (`inject` was covered in RubyMonk, but people still may not get it.) Make sure you understand the code below first before including it and ask a TA if you are unsure. Once you are comfortable with it, re-run the tests and see another one pass.
+14.  Now go back to the Child model and create a new method called `points_earned` that returns the points a child has earned for completed chores. Try this on your own first if you have time. If not or you are stuck, we will give you the method straight-up. (`inject` was covered in RubyMonk, but people still may not get it.) Make sure you understand the code below first before including it and ask a TA if you are unsure. Once you are comfortable with it, re-run the tests and see another one pass.
 
 ```ruby
 def points_earned
@@ -352,7 +338,7 @@ end
 
 Run all three model tests by executing `rake test:units` on the command line and make sure everything is passing. 
 
-16.  Before we go, let's check the testing coverage. To do this, go to the coverage directory of the project, open the file `index.html` in your browser, click on the models tab and view the coverage for your models. Make sure you have 100% coverage for the chores and tasks models. Be able to explain to a TA why you don't have 100% coverage on the child model.
+15.  Before we go, let's check the testing coverage. To do this, go to the coverage directory of the project, open the file `index.html` in your browser, click on the models tab and view the coverage for your models. Standard procedure is to ensure 100% test coverage for all of our lines of code, but notice one of the models is not at 100%! This is because we added the `points_earned` method without any test cases (which is not good). Add in some test cases to ensure that this model is back up to 100% test coverage.
 
 Then merge back to master and get the lab checked-off. 
 
