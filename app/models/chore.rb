@@ -1,2 +1,2 @@
-class Chore < ActiveRecord::Base
+class Chore < ApplicationRecord
 end

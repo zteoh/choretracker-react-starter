@@ -1,3 +1,3 @@
-class Child < ActiveRecord::Base
+class Child < ApplicationRecord
     
 end
