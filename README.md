@@ -1,6 +1,6 @@
 # Part 1
 
-1. Use git to clone the base project set up [on github](https://github.com/RebeccaKern/UpdatedChoreTracker) and **review the contents before proceeding**. Look at the ERD that is in the `doc/` directory. Basically, you have a project that has been scaffolded in accordance with the ERD, but there is essentially no model code apart from what comes with ActiveRecord::Base. In the first part we will be using Test Driven Development (TDD) to build out these models and verify that it is working. In the second part of the lab we will do some clean up of the views to take advantage of some of the model code we've written
+1. Use git to clone the base project set up [on github](https://github.com/495-Labs-Projects/ChoreTracker) and **review the contents before proceeding**. Look at the ERD that is in the `doc/` directory. Basically, you have a project that has been scaffolded in accordance with the ERD, but there is essentially no model code apart from what comes with ActiveRecord::Base. In the first part we will be using Test Driven Development (TDD) to build out these models and verify that it is working. In the second part of the lab we will do some clean up of the views to take advantage of some of the model code we've written
 
     *   Run the bundle command to install the new gems used in this project:
 
@@ -26,17 +26,6 @@
 
     ```
 
-    Likewise, include the [turn](https://github.com/turn-project/turn) gem (which will format the unit test output for us) by requiring it in the test helper (see comments on line 7) with: 
-    ```ruby
-    require 'turn/autorun'
-    ```
-    and then at the bottom of the file put in the line: 
-    ```ruby
-    Turn.config.format = :outline
-    ```
-
-    to format the output. (See other options for formatting in the gem's documentation.)
-
     If you have forgotten to do so by this point, then **make sure you are committing your work to git**. Hopefully it is becoming second nature now. It is a great idea to be regularly saving your code to git or some other form of source code control and to take advantage of branching when appropriate. (Your discretion today when to do these things...)
 
 3.  Getting back to the code, within the `test/` directory, there is a file called `factories.rb`. In that file, we need to complete the Child factory. Set the first name of the child by default to 'Alex' and the last name to 'Heimann' by default. Look at the other factories provided to understand the syntax. For a list of fields on the Child model, look at the `db/schema.rb` file (ignore created_at and update_at fields). **Have a TA verify that the factories are correct before proceeding.**
@@ -49,7 +38,7 @@
       should have_many(:tasks).through(:chores)
       ```
 
-    Because we have set up the [single_test](https://github.com/grosser/single_test) gem for you, it is possible to just run the child tests with the command `rake test:child`. You can run all three model tests by executing `rake test:units` on the command line, at the moment you will still see failures to be fixed.
+    Because we have set up the [single_test](https://github.com/grosser/single_test) gem for you, it is possible to just run the child tests with the command `rails test test/models/child_test`. You can run all three model tests by executing `rails test test/models` on the command line, but at the moment we only have tests in the child model.
 
 5. Next we add in validation matching:
 
@@ -58,7 +47,7 @@
       should validate_presence_of(:last_name)
       ```
 
-    Test these by running `rake test:child` on the command line and watch them fail.
+    Test these by running `rails test test/models/child_test` on the command line and watch them fail.
 
 6.  Before we continue we should set up contexts for more complex unit tests. Essentially a context is a controlled environment where the same databse setup is replicated before each test within the context to test the same data on various scenarios. For example, we can create a context where there are 3 children in the system, 2 of which are active. We then can use knowledge about these children within the context to set up testing scenarios.
 
@@ -336,7 +325,7 @@ def points_earned
 end 
 ```
 
-Run all three model tests by executing `rake test:units` on the command line and make sure everything is passing. 
+Run all three model tests by executing `rails test test/models` on the command line and make sure everything is passing. 
 
 15.  Before we go, let's check the testing coverage. To do this, go to the coverage directory of the project, open the file `index.html` in your browser, click on the models tab and view the coverage for your models. Standard procedure is to ensure 100% test coverage for all of our lines of code, but notice one of the models is not at 100%! This is because we added the `points_earned` method without any test cases (which is not good). Add in some test cases to ensure that this model is back up to 100% test coverage.
 
