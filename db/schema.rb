@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -13,29 +12,29 @@
 
 ActiveRecord::Schema.define(version: 20140217221809) do
 
-  create_table "children", force: true do |t|
-    t.string   "first_name"
-    t.string   "last_name"
-    t.boolean  "active",     default: true
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  create_table "children", force: :cascade do |t|
+    t.string "first_name"
+    t.string "last_name"
+    t.boolean "active", default: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  create_table "chores", force: true do |t|
-    t.integer  "child_id"
-    t.integer  "task_id"
-    t.date     "due_on"
-    t.boolean  "completed",  default: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  create_table "chores", force: :cascade do |t|
+    t.integer "child_id"
+    t.integer "task_id"
+    t.date "due_on"
+    t.boolean "completed", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  create_table "tasks", force: true do |t|
-    t.string   "name"
-    t.integer  "points"
-    t.boolean  "active",     default: true
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  create_table "tasks", force: :cascade do |t|
+    t.string "name"
+    t.integer "points"
+    t.boolean "active", default: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end
