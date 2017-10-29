@@ -1,3 +1,4 @@
+## ChoreTracker Lab Solution ##
 # Part 1
 
 1. Use git to clone the base project set up [on github](https://github.com/495-Labs-Projects/ChoreTracker) and **review the contents before proceeding**. Look at the ERD that is in the `doc/` directory. Basically, you have a project that has been scaffolded in accordance with the ERD, but there is essentially no model code apart from what comes with ApplicationRecord. In the first part we will be using Test Driven Development (TDD) to build out these models and verify that it is working. In the second part of the lab we will do some clean up of the views to take advantage of some of the model code we've written
@@ -314,6 +315,21 @@ Show a TA that you have the basic tests written for the Child model and that you
 
     **Once these tests all pass, merge the code back into the `master` branch.**
 
+<<<<<<< HEAD
+
+14.  Now go back to the Child model and create a new method called `points_earned` that returns the points a child has earned for completed chores. Try this on your own first if you have time. If not or you are stuck, we will give you the method straight-up. (`inject` was covered in RubyMonk, but people still may not get it.) Make sure you understand the code below first before including it and ask a TA if you are unsure. Once you are comfortable with it, re-run the tests and see another one pass.
+
+```ruby
+  def points_earned
+    self.chores.done.inject(0){|sum,chore| sum += chore.task.points}
+  end 
+```
+  
+  Run all three model tests by executing `rails test test/models` on the command line and make sure everything is passing. 
+
+15.  Before we go, let's check the testing coverage. To do this, go to the coverage directory of the project, open the file `index.html` in your browser, click on the models tab and view the coverage for your models. Standard procedure is to ensure 100% test coverage for all of our lines of code, but notice one of the models is not at 100%! This is because we added the `points_earned` method without any test cases (which is not good). Add in some test cases to ensure that this model is back up to 100% test coverage.
+
+=======
 
 14.  Now go back to the Child model and create a new method called `points_earned` that returns the points a child has earned for completed chores. Try this on your own first if you have time. If not or you are stuck, we will give you the method straight-up. (`inject` was covered in RubyMonk, but people still may not get it.) Make sure you understand the code below first before including it and ask a TA if you are unsure. Once you are comfortable with it, re-run the tests and see another one pass.
 
@@ -327,6 +343,7 @@ Show a TA that you have the basic tests written for the Child model and that you
 
 15.  Before we go, let's check the testing coverage. To do this, go to the coverage directory of the project, open the file `index.html` in your browser, click on the models tab and view the coverage for your models. Standard procedure is to ensure 100% test coverage for all of our lines of code, but notice one of the models is not at 100%! This is because we added the `points_earned` method without any test cases (which is not good). Add in some test cases to ensure that this model is back up to 100% test coverage.
 
+>>>>>>> c1c571405413e21e7bfc0776c77eb6bf10990b03
   Then merge back to master and get the lab checked-off. 
 
 # <span class="mega-icon mega-icon-issue-opened"></span>Stop

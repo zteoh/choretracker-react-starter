@@ -2,6 +2,8 @@ FactoryGirl.define do
   
   # TODO: fill in factory blueprint for children
   factory :child do
+    first_name "Alex"
+    last_name "Heimann"
   end
 
   # factory blueprint for tasks
