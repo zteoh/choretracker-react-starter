@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   
   # TODO: fill in factory blueprint for children
   factory :child do

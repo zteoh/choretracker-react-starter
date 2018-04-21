@@ -49,7 +49,7 @@ end
 
 # Gems used only in testing
 group :test do
-  gem 'factory_girl_rails'
+  gem 'factory_bot_rails'
   gem 'shoulda'
   gem 'shoulda-matchers'
   gem 'simplecov'
