@@ -91,19 +91,7 @@ TODO: Instructions about populating, using React developer tools, git commit and
 
 ## Get information (like child name, task name and and chore information) to populate the table
 
-3. Create `chores` variable in the state. TODO: Explain what are states and props and the lifecycle methods
-
-    ```
-    state = { 
-        chores: [],
-    }
-
-    componentDidMount() {
-        this.get_chores()
-    }
-    ```
-
-    Create high level functions to obtain information about chores
+3. Create `chores` variable in the state and create the `get_chores  function.
 
     ```
     get_chores = () => {
@@ -149,7 +137,7 @@ TODO: Instructions about populating, using React developer tools, git commit and
     }
     ```
 
-    Now, refresh your application and make sure the `chores` state in the `Chores` component is populated with 7 chores.
+    Now, add the `get_chores` function to `componentDidMount` and refresh your application and make sure the `chores` state in the `Chores` component is populated with 7 chores.
 
 ## Populating the table
 
@@ -207,7 +195,7 @@ TODO: Instructions about populating, using React developer tools, git commit and
 
 11. Update your `showChores` function so that you would show the name of the child and task instead of the id. Hint: In order to call a function defined in the class, you should use `this.<functionName>(<parameter>)`
 
-12. Now your page should look like this. TODO: insert image
+12. Now your page should look like this.
 
     ![Imgur](https://i.imgur.com/finf3Ai.png)
 
@@ -217,23 +205,19 @@ TODO: Instructions about populating, using React developer tools, git commit and
 
 ## Toggling the `NewChoreForm`
 
-2. We want the `NewChoreForm` to appear only when we click on the `Add New Chore` Button. We can create a `modal_open` variable in our state and default it to false by adding the following line in the `state` of the `Chores` component
+2. We want the `NewChoreForm` to appear only when we click on the `Add New Chore` Button. 
+    
+    We can create a `modal_open` variable in our state and default it to false.
+
+3. Next, we want to be able to toggle the `modal_open` state when the `New Chore` button is clicked. Implement this similar to how you have in the previous lab.
+
+4. Now, we will toggle the visibility of `NewChoreForm` when the button is clicked.
+    Add the following line below the `<button>` tag which will call`showChoreForm` when `modal_open` is `true`.
     ```
-    modal_open: false
+    { this.state.modal_open ? this.showChoreForm() : null }
     ```
 
-3. Add `onClick={this.switchModal}` in the opening `<button>` tag and define the function `switchModal`. TODO: explaining setting of state and the option parameter of `prevState`
-    ```
-    switchModal = () => {
-        this.setState(prevState => ({
-            modal_open: !prevState.modal_open
-        }));
-    }
-    ```
-    Try clicking on the button and seeing whether the `modal_open` state changes in the React Developer Tool.
-
-4. Now, we will toggle the `NewChoreForm` when the button is clicked.
-    ```
+     ```
     showChoreForm = () => {
         return (
             <div>
@@ -247,18 +231,8 @@ TODO: Instructions about populating, using React developer tools, git commit and
             )
     }
     ```
-    We will also add the following line below the `<button>` tag which will call`showChoreForm` when `modal_open` is `true`.
-    ```
-    { this.state.modal_open ? this.showChoreForm() : null }
-    ```
-
-    Refresh the page and click on the `Add new chore` button. Did the application crash and give you the error `Uncaught ReferenceError: NewChoreForm is not defined`? This is because we need to import our `NewChoreForm` component to the start of our `Chores` component!
 
     Now, when you click on the `Add new chore` button, you would be able to toggle the `NewChoreForm` on the React DevTool.
-    
-    ```
-    import NewChoreForm from './NewChoreForm';
-    ```
 
 ## Creating the New Chore Form
 5. Create a skeleton `render` function with a `child` dropdown. 
@@ -309,25 +283,19 @@ TODO: Instructions about populating, using React developer tools, git commit and
       }
     ```
 
-8. Do the same for `task` and `due_on`. Hint: you would need to (1) (possibly) create options, (2) add form inputs (3) add variables to the state and (4) deal with the change of form inputs. 
+8. Do the same for `task` and `due_on`.
 
 ## Submitting the form
-9. Add the trigger by modifying the opening `<form>` tag
-    ```
-    <form onSubmit={this.handleSubmit}>
-    ```
+9. Add a `onSubmit` trigger to the opening `<form>` tag which will call     `this.handleSubmit`
 
-10. Now, whenever we click on the `submit` button, the form will call the `handleSubmit` function. Define the function
+10. Now, define the `handleSubmit` function
     ```
     handleSubmit = (event) => {
         event.preventDefault();
-        const new_chore = {
-                        child_id: this.state.child.id,
-                        task_id: this.state.task.id,
-                        due_on: this.state.due_on,
-                        completed: this.state.completed
-                    }
-        this.props.run_ajax('/chores.json', 'POST', {"chore": new_chore});
+
+        // create a `new_chore` constant
+        // call `run_ajax`
+
         this.props.switchModal()
     }
     ```
@@ -351,37 +319,23 @@ TODO: Instructions about populating, using React developer tools, git commit and
 # Part 4: Completing and Deleting Chores #
 
 ## Toggling Completion of Chore
-1. Modify the `showChores` function in `Chores.js` by adding `onClick={() => this.toggle_complete(chore)}` in the `<td>` opening tag. You should get the following line of code:
-
-```
-<td width="50" onClick={() => this.toggle_complete(chore)}>Check</td>
-```
+1. Modify the `showChores` function in `Chores.js` by adding a `onClick` trigger in the `<td>` opening tag which calls an anonymous function, `toggle_complete`. You should get the following line of code:
 
 Do you know why we need to use an anonymous function for onClick? Try `onClick = this.toggle_complete(chore)` later and see whether anything changes. Hint: investigate the `completed` property of chores in the React Dev Tools.
 
 2. Let's define the `toggle_complete` function
     ```
     toggle_complete = (chore) => {
-        const updated_chore = {
-            child_id: chore.child_id,
-            task_id: chore.task_id,
-            due_on: chore.due_on,
-            completed: !chore.completed
-        }
-        this.run_ajax('/chores/'.concat(chore.id, '.json'), 'PATCH', {chore: updated_chore});
+        
+        // create a new constant `updated_chore`
+        // call `run_ajax`
+
     }
     ```
 
 3. Try this out and make sure it works before moving on!
 
 ## Deleting a Chore
-3. Modify the `showChores` function by adding `onClick={() => this.remove_record(chore)}` in the `<td>` opening tag.
-
-4. Define the `remove_record` function
-    ```
-    remove_record = (chore) => {
-        this.run_ajax('/chores/'.concat(chore['id'], '.json'), 'DELETE', {chore: chore});       
-    }
-    ```
+4. Using the same logic as toggling completion of a Chore, implement the deletin of a chore.
 
 # Part 5: Error Handling #
