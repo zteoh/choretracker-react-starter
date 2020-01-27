@@ -2,7 +2,7 @@
 
 # Part 1: Setup and Installation #
 
-1. Clone starter code
+1. Clone starter code `git clone https://github.com/zteoh/choretracker-react-starter.git`
 2. In your gemfile, add: `gem 'react-rails'` and `gem 'webpacker'`
 3. Run 
     ```
@@ -19,7 +19,7 @@
     create  app/javascript/packs/application.js
     create  app/javascript/packs/server_rendering.js
     ```
-4. Link the JavaScript pack in Rails view by adding the following line in `application.html.erb`
+4. Link the JavaScript pack in Rails view by adding the following line between the `<head>` tags in `application.html.erb`
     ```
     <%= javascript_pack_tag 'application' %>
     ```
@@ -27,7 +27,10 @@
     ```
     rails g react:component Chores
     ```
-    This would create the `Chores.js` file in  `app/javascript/components`
+    This would create the `Chores.js` file in  `app/javascript/components` and you should see the following:
+    ```
+    create  app/javascript/components/Chores.js
+    ```
 6. Connect the newly created `Chores` Component to your View (`app/views/chores/index.html`) above the `<table>` tag.
     ```
     <%= react_component("Chores") %>
@@ -63,7 +66,7 @@ TODO: Instructions about populating, using React developer tools, git commit and
 
 ## Verifying connection between the `Chore` Component and Rails View
 
-1. Render the skeleton of the table
+1. Open the `Chores.js` file we just created and replace the `render()` function with a skeleton of the table
 
     ```
     render () {
@@ -149,11 +152,11 @@ TODO: Instructions about populating, using React developer tools, git commit and
     }
     ```
 
-    Now, refresh your application and make sure the `chores` state in the `Chores` component is populated with 7 chores.
+    Now, refresh your application and make sure in the React Developer Tools, the `chores` state in the `Chores` component is populated with 7 chores.
 
 ## Populating the table
 
-5. Add the following code after the `</thead>` tag
+5. Add the following code after the `</thead>` tag (in your `render()` function)
     ```
     <tbody>
         { this.showChores() }
@@ -203,9 +206,9 @@ TODO: Instructions about populating, using React developer tools, git commit and
     }
     ```
 
-10. Create the function `find_task_name`, which given a `chore`, would return the name of the `task` associated with the `chore`.
+10. Update your `showChores` function so that you would show the name of the child instead of the id. Hint: In order to call a function defined in the class, you should use `this.<functionName>(<parameter>)`
 
-11. Update your `showChores` function so that you would show the name of the child and task instead of the id. Hint: In order to call a function defined in the class, you should use `this.<functionName>(<parameter>)`
+11. Now, do the same for `task` such that users would be able to see the name of the task instead of the id.
 
 12. Now your page should look like this. TODO: insert image
 
@@ -217,7 +220,7 @@ TODO: Instructions about populating, using React developer tools, git commit and
 
 ## Toggling the `NewChoreForm`
 
-2. We want the `NewChoreForm` to appear only when we click on the `Add New Chore` Button. We can create a `modal_open` variable in our state and default it to false by adding the following line in the `state` of the `Chores` component
+2. We want the `NewChoreForm` to appear only when we click on the `Add New Chore` Button. Go back to `Chore.js`. We can create a `modal_open` variable in our state and default it to false by adding the following line in the `state` of the `Chores` component
     ```
     modal_open: false
     ```
@@ -232,7 +235,7 @@ TODO: Instructions about populating, using React developer tools, git commit and
     ```
     Try clicking on the button and seeing whether the `modal_open` state changes in the React Developer Tool.
 
-4. Now, we will toggle the `NewChoreForm` when the button is clicked.
+4. Now, we will toggle the `NewChoreForm` when the button is clicked. Add the following function in `Chores.js`
     ```
     showChoreForm = () => {
         return (
@@ -247,7 +250,7 @@ TODO: Instructions about populating, using React developer tools, git commit and
             )
     }
     ```
-    We will also add the following line below the `<button>` tag which will call`showChoreForm` when `modal_open` is `true`.
+    We will also add the following line below the `<button>` tag which will call `showChoreForm` when `modal_open` is `true`.
     ```
     { this.state.modal_open ? this.showChoreForm() : null }
     ```
@@ -261,7 +264,7 @@ TODO: Instructions about populating, using React developer tools, git commit and
     ```
 
 ## Creating the New Chore Form
-5. Create a skeleton `render` function with a `child` dropdown. 
+5. Let's switch to `NewChoreForm.js` and create a skeleton `render` function with a `child` dropdown. 
 
     ```
     render() {
@@ -309,7 +312,11 @@ TODO: Instructions about populating, using React developer tools, git commit and
       }
     ```
 
-8. Do the same for `task` and `due_on`. Hint: you would need to (1) (possibly) create options, (2) add form inputs (3) add variables to the state and (4) deal with the change of form inputs. 
+8. Do the same for `task` and `due_on`. 
+
+    Hint: you would need to (1) (possibly) create options, (2) add form inputs (3) add variables to the state and (4) deal with the change of form inputs. 
+
+    Hint: to create a datepicker, you can use `	<input type="date">`
 
 ## Submitting the form
 9. Add the trigger by modifying the opening `<form>` tag
