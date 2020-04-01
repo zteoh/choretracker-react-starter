@@ -3,12 +3,14 @@
 # Part 1: Setup and Installation #
 
 1. Clone starter code `git clone https://github.com/zteoh/choretracker-react-starter.git`
-2. In your gemfile, add: `gem 'react-rails'` and `gem 'webpacker'`
-3. Run 
+
+2. In your gemfile, add: `gem 'react-rails'` and `gem 'webpacker'` to the end of the file, not in any specific group
+
+3. Run
     ```
     bundle install
     rails webpacker:install
-    rails webpacker:install:react 
+    rails webpacker:install:react
     rails generate react:install
     ```
 
@@ -35,8 +37,6 @@
     ```
     <%= react_component("Chores") %>
     ```
-
-TODO: Instructions about populating, using React developer tools, git commit and pain points.
 
 7. Run `rails db:migrate` and then go to `rails console` to load the testing contexts (for children, tasks, and chores) as some base data. Remember this can be done in rails console through first requiring needed modules:
 
@@ -66,26 +66,26 @@ TODO: Instructions about populating, using React developer tools, git commit and
 
 ## Verifying connection between the `Chore` Component and Rails View
 
-1. Open the `Chores.js` file we just created and replace the `render()` function with a skeleton of the table
+1. Open the `Chores.js` file we just created and *replace* the `render()` function with a skeleton of the table
 
     ```
     render () {
-            return (
-                <div>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th width="125" align="left">Child</th>
-                                <th width="200" align="left">Task</th>
-                                <th width="75">Due on</th>
-                                <th width="125">Completed</th>
-                            </tr>
-                        </thead>
-                    </table>
-                    <button>New Chore</button>
-                </div>
-                );
-        }
+        return (
+            <div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th width="125" align="left">Child</th>
+                            <th width="200" align="left">Task</th>
+                            <th width="75">Due on</th>
+                            <th width="125">Completed</th>
+                        </tr>
+                    </thead>
+                </table>
+                <button>New Chore</button>
+            </div>
+        );
+    }
     ```
 
 2. Start your server and make sure you can see the header of the table
@@ -94,7 +94,7 @@ TODO: Instructions about populating, using React developer tools, git commit and
 
 ## Get information (like child name, task name and and chore information) to populate the table
 
-3. Create `chores` variable in the state. TODO: Explain what are states and props and the lifecycle methods
+3. Create `chores` variable in the state. Add the following statement and method in the `Chores` class.
 
     ```
     state = { 
@@ -106,7 +106,7 @@ TODO: Instructions about populating, using React developer tools, git commit and
     }
     ```
 
-    Create high level functions to obtain information about chores
+    Create high level functions to obtain information about chores.
 
     ```
     get_chores = () => {
@@ -114,7 +114,7 @@ TODO: Instructions about populating, using React developer tools, git commit and
     }
     ```
 
-4. Create function to make ajax requests
+4. Create function to make ajax requests. 
 
     ```
     run_ajax = (link, method="GET", data={}, callback = () => {this.get_chores()}) => {
@@ -123,8 +123,8 @@ TODO: Instructions about populating, using React developer tools, git commit and
             options = { method: method}
         } else {
             options = { 
-                method: method, 
-                body: JSON.stringify(data), 
+                method: method,
+                body: JSON.stringify(data),
                 headers: {
                 'Content-Type': 'application/json',
                 },
@@ -152,7 +152,7 @@ TODO: Instructions about populating, using React developer tools, git commit and
     }
     ```
 
-    Now, refresh your application and make sure in the React Developer Tools, the `chores` state in the `Chores` component is populated with 7 chores.
+    Now, refresh your application and make sure in the React Developer Tools, the `chores` state in the `Chores` component is populated with 7 chores. If you have any problems getting this to work, ask a TA for help.
 
 ## Populating the table
 
@@ -183,7 +183,15 @@ TODO: Instructions about populating, using React developer tools, git commit and
 
 ## Improving the Chore Table
 
-7. We realise that instead of the id of the child and task, it would be better to show the name of the child and the task. First, add `tasks` array and `children` array into your `state`
+7. We realise that instead of the id of the child and task, it would be better to show the name of the child and the task. First, add `tasks` array and `children` array into your `state`. Your `state` should now look something like this:
+
+```
+state = { 
+    chores: [],
+    tasks: [],
+    children: [],
+}
+```
 
 8. Create high level functions to populate your `children` and `tasks` state. Remember to also add these high level functions to `componentDidMount()`
 
@@ -210,7 +218,7 @@ TODO: Instructions about populating, using React developer tools, git commit and
 
 11. Now, do the same for `task` such that users would be able to see the name of the task instead of the id.
 
-12. Now your page should look like this. TODO: insert image
+12. Now your page should look like this.
 
     ![Imgur](https://i.imgur.com/finf3Ai.png)
 
@@ -225,7 +233,7 @@ TODO: Instructions about populating, using React developer tools, git commit and
     modal_open: false
     ```
 
-3. Add `onClick={this.switchModal}` in the opening `<button>` tag and define the function `switchModal`. TODO: explaining setting of state and the option parameter of `prevState`
+3. Add `onClick={this.switchModal}` in the opening `<button>` tag and define the function `switchModal`. Your code should now look like `<button onClick={this.switchModal}>`
     ```
     switchModal = () => {
         this.setState(prevState => ({
@@ -312,7 +320,7 @@ TODO: Instructions about populating, using React developer tools, git commit and
       }
     ```
 
-8. Do the same for `task` and `due_on`. 
+8. Do the same for `task` and `due_on`.
 
     Hint: you would need to (1) (possibly) create options, (2) add form inputs (3) add variables to the state and (4) deal with the change of form inputs. 
 
@@ -349,8 +357,6 @@ TODO: Instructions about populating, using React developer tools, git commit and
     Completed 500  in 2ms (ActiveRecord: 0.0ms)
     ```
 
-    Cross Site Request Forgery is <TODO: Explain this and why it is needed - man in the middle attack maybe>
-
     In order to solve this problem, head over to `application_controller.rb` and replace `protect_from_forgery with: :exception` with `protect_from_forgery with: :null_session`
 
 12. Now, try submitting your new chore form again.
@@ -382,13 +388,11 @@ Do you know why we need to use an anonymous function for onClick? Try `onClick =
 3. Try this out and make sure it works before moving on!
 
 ## Deleting a Chore
-3. Modify the `showChores` function by adding `onClick={() => this.remove_record(chore)}` in the `<td>` opening tag.
+4. Modify the `showChores` function by adding `onClick={() => this.remove_record(chore)}` in the `<td>` opening tag.
 
-4. Define the `remove_record` function
+5. Define the `remove_record` function
     ```
     remove_record = (chore) => {
-        this.run_ajax('/chores/'.concat(chore['id'], '.json'), 'DELETE', {chore: chore});       
+        this.run_ajax('/chores/'.concat(chore['id'], '.json'), 'DELETE', {chore: chore});
     }
     ```
-
-# Part 5: Error Handling #
